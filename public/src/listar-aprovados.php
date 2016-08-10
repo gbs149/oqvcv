@@ -1,10 +1,7 @@
 <?php
-session_start();
-
-$descricao = htmlentities($_POST['descricao'], ENT_QUOTES, 'UTF-8');
 
 try {
-    include('../settings.php');
+    include('../../settings.php');
     $pdo = new PDO(
         sprintf(
             'mysql:host=%s;dbname=%s;port=%s;charset=%s',
@@ -22,15 +19,16 @@ try {
     exit;
 }
 
-
-$sql = "INSERT INTO descricoes (descricao) VALUES (:descricao) ";
+$sql = "SELECT descricao FROM descricoes WHERE aprovado = TRUE;";
 
 $statement = $pdo->prepare($sql);
 
-$statement->bindValue(':descricao', $descricao);
-
 $statement->execute();
 
-print "success";
+$lista = $statement->fetchAll(PDO::FETCH_NUM);
+
+$json = json_encode($lista);
+
+print($json);
 
 
