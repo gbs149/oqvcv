@@ -1,5 +1,7 @@
 <?php
 
+header('Content-Type: application/json');
+
 try {
     include('../../settings.php');
     $pdo = new PDO(
@@ -27,6 +29,7 @@ $statement->execute();
 
 $lista = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-$json = json_encode($lista);
+$json = htmlspecialchars_decode(json_encode($lista));
 
-print($json);
+echo $json;
+

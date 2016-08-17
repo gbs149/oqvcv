@@ -1,4 +1,5 @@
 <?php
+header('Content-Type: application/json');
 
 try {
     include('../../settings.php');
@@ -19,16 +20,21 @@ try {
     exit;
 }
 
+//seleciona somente as descrições aprovadas
 $sql = "SELECT descricao FROM descricoes WHERE aprovado = TRUE;";
 
 $statement = $pdo->prepare($sql);
-
 $statement->execute();
 
 $lista = $statement->fetchAll(PDO::FETCH_NUM);
 
-$json = json_encode($lista);
+//transforma array de arrays em array de strings
+foreach( $lista as &$item ) {
+    $item = $item[0];
+}
 
-print($json);
+//prepara e retorna como json
+$json = htmlspecialchars_decode(json_encode($lista));
+echo $json;
 
 
