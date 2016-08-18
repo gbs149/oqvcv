@@ -56,62 +56,7 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
-.pagina {
-    width: 100vw;
-    height: 100vh;
 
-    background-color: #222;
-    color: #eee;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-td {
-    padding: 1rem;
-}
-
-form {
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: center;
-}
-
-input {
-    padding: 1rem;
-    margin-bottom: 1rem;
-
-    font-size: 1.5rem;
-    color: #444;
-}
-
-textarea {
-    resize: none;
-    padding: 1rem;
-    margin-bottom: 1rem;
-
-    font-size: 1.5rem;
-    color: #444;
-}
-
-
-::-webkit-input-placeholder { color:#000; }
-::-moz-placeholder { color:#000; } /* firefox 19+ */
-:-ms-input-placeholder { color:#000; } /* ie */
-input:-moz-placeholder { color:#000; }
-
-
-button {
-    display: block;
-    border: none;
-    padding: 0.5rem;
-
-    font-size: 1.5rem;
-
-    background-color: #ddd;
-    color: #333;
-}
 
 
 /* ==========================================================================
