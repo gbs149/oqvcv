@@ -1,35 +1,34 @@
 "use strict";
 
-// função recursiva para percorrer array com descrições.
+// função recursiva para percorrer array com descrições repetidamente.
 function loopRepeat(array) {
-    // se array estiver vazia buscar dados por GET
+
+    // se array estiver vazia buscar dados por AJAX
     if (array.length === 0) {
         $.get("/src/listar-aprovadas.php", function (data) {
             loopRepeat(data);
         });
-    }
-    // se hover elementos em array...
-    else {
+    } else {
         var texto = array.shift();
-        var timeOut = texto.length / 12 * 1000;
-        $("#descricao").text(texto).focus();
+        $("#descricao").text(texto);
 
-        setTimeout(function () {
-            loopRepeat(array);
-        }, timeOut);
+        responsiveVoice.speak(texto, "Brazilian Portuguese Female",
+            {
+                onend: function () {
+                    setTimeout(function () {
+                        loopRepeat(array);
+                    }, 1000);
+                }
+            });
     }
 }
 
-loopRepeat(["por três foto", "Composição formada por três fotos dispostas em retângulos horizontais que tomam toda a extensão da página. O mesmo cenário é reproduzido por três vezes. As duas primeiras fotos ocupam a metade superior da página, e a terceira foto, a metade"]);
-
-
-
-
-
-
+loopRepeat([]);
 
 
 /*
+
+teste com 10.000 caracteres.
 tempo: 13'20" - 800s.
 caracteres por segundo: 12.5
 
@@ -38,10 +37,8 @@ voz:"Brazilian Portuguese Female"
 pitch: 1
 rate: 1
 
-obs.: corta o texto em partes menores, cortando as frases.
+PROBLEMA: no Chrome, usa corta o texto em partes menores (100 caracteres), cortando as frases.
 
-Composição formada por três fotos dispostas em retângulos horizontais que tomam toda a extensão da página. O mesmo cenário é reproduzido por três vezes. As duas primeiras fotos ocupam a metade superior da página, e a terceira foto, a metade inferior. A primeira e a terceira imagens são recortes da mesma fotografia. Já a segunda imagem é vista de um ângulo ligeiramente diferente. As fotos, tiradas de baixo para cima, mostram dois semáforos em um poste de braço projetado. O primeiro, afixado na coluna, está voltado para a direita. O segundo está no alto, ao final do braço projetado, voltado para a esquerda. O céu claro é riscado por muitos fios e cabos. No canto inferior esquerdo vemos parte da copa de uma árvore e, à direita, o alto de uma torre de transmissão de energia. A foto, de página dupla, revela o cenário onde se encaixa a imagem anterior: o cruzamento da Rua Santana com a Avenida Ipiranga. A metade esquerda é ocupada pelos semáforos que controlam o tráfego da Santana: são dois postes de braços projetados, um de cada lado da rua. Ao fundo, árvores mais altas que os semáforos, com copas densas e frondosas. Na metade direita, em primeiro plano, uma placa de esquina indica o nome das ruas. Ao fundo, a ponte que atravessa a Ipiranga e árvores que margeiam o Arroio Dilúvio. Do outro lado da avenida há um prédio residencial de três andares. Junto à margem direita, uma torre de transmissão de energia. O céu claro é riscado por muitos fios e cabos que acompanham o sentido da Avenida Ipiranga.Em primeiro plano vemos uma árvore grande, cuja copa frondosa ocupa a maior parte da fotografia. Suas raízes estendem-se pelo terreno. Ao fundo, uma área com gramado e árvores é delimitada por fradinhos, pequenos blocos de concreto, utilizados para impedir a circulação de veículos. À esquerda, junto a uma avenida larga, há uma placa de orientação, parcialmente oculta pelos ramos da árvore, onde se lê a palavra “Azenha”. Do outro lado da avenida, vemos uma pequena parte da lateral do Estádio Olímpico. Ainda na Rótula do Papa, vemos de perto a placa de orientação, que indica Teresópolis e Cavalhada à direita, e Azenha seguindo em frente. À esquerda da placa, há um poste onde está afixado um cartaz divulgando um apartamento à venda e uma lixeira em modelo padrão da Prefeitura de Porto Alegre. Há papéis espalhados pelo gramado. Uma fileira de fradinhos demarca a calçada, cruzando a imagem na horizontal, rente à placa e ao poste. Em primeiro plano, uma placa de esquina identifica a Rua José de Alencar. Por trás dela, há um poste de concreto com uma placa de proibido estacionar e à direita, junto à margem da foto, um poste metálico fino com restos de papel colado e duas braçadeiras. Atrás dos postes vemos os galhos de uma árvore e, um pouco além, parte de um semáforo e dois postes de iluminação. Ao longe, avistamos o Morro da Polícia com diversas antenas de telecomunicação instaladas no topo. Legenda: E do Papa de volta à igreja, desta vez a Menino Deus – em cuja praça nasceu a Bossa de Porto Alegre. Acima das copas das árvores, vemos a cruz no topo da torre da Igreja Menino Deus contra o céu claro. A cruz é escura, reta e sem adornos. Da torre, uma estrutura de concreto formada por colunas retas, aparece apenas o topo. Três fios de eletricidade, paralelos, cruzam a parte superior da foto em leve diagonal ascendente. Outros fios passam rente às árvores, por entre os galhos e as folhas. Fotografia da Praça em frente à Igreja Menino Deus. Em uma área calçada com pedra portuguesa estão dispostos três bancos de praça, traçando uma diagonal que tem início no canto inferior esquerdo.  Por trás dos bancos, uma cerca viva demarca um canteiro ajardinado, onde se vê o tronco bifurcado de uma grande árvore, postes de iluminação e a base da torre da igreja, formada por colunas de concreto.  Ao fundo, vemos parte da fachada da Igreja, com uma parede branca onde há uma grande janela gradeada, e um paredão de tijolos à vista. O prédio é protegido por uma grade de ferro. Mais além, aparece parte de um prédio residencial vizinho à igreja. Contra o céu nublado, vemos quatro palmeiras enfileiradas. Da primeira, identifica-se o tronco fino e cilíndrico, que corta a foto na vertical. Da segunda, aparece parte do tronco e a copa, no alto da imagem. Das palmeiras mais distantes,vemos apenas as copas. Em primeiro plano, quatro fios de eletricidade atravessam a foto de um lado a outro, em uma suave diagonal descendente. No centro da imagem, um poste de distribuição de energia, visto de baixo, atravessa a foto na vertical. Dele se projeta um braço metálico que serve de suporte para um cabo de sustentação. Inúmeros fios e cabos traçam uma diagonal do canto inferior esquerdo ao canto superior direito da foto, acompanhando o sentido de uma fileira de quatro palmeiras. Apenas quatro fios partem do poste na perpendicular, cruzando a frente de uma das palmeiras em diagonal descendente, revelando tratar-se do cenário da foto anterior. Composição formada por três fotos dispostas em retângulos horizontais que tomam toda a extensão da página. O mesmo cenário é reproduzido por três vezes. As duas primeiras fotos ocupam a metade superior da página, e a terceira foto, a metade inferior. A primeira e a terceira imagens são recortes da mesma fotografia. Já a segunda imagem é vista de um ângulo ligeiramente diferente. As fotos, tiradas de baixo para cima, mostram dois semáforos em um poste de braço projetado. O primeiro, afixado na coluna, está voltado para a direita. O segundo está no alto, ao final do braço projetado, voltado para a esquerda. O céu claro é riscado por muitos fios e cabos. No canto inferior esquerdo vemos parte da copa de uma árvore e, à direita, o alto de uma torre de transmissão de energia. A foto, de página dupla, revela o cenário onde se encaixa a imagem anterior: o cruzamento da Rua Santana com a Avenida Ipiranga. A metade esquerda é ocupada pelos semáforos que controlam o tráfego da Santana: são dois postes de braços projetados, um de cada lado da rua. Ao fundo, árvores mais altas que os semáforos, com copas densas e frondosas. Na metade direita, em primeiro plano, uma placa de esquina indica o nome das ruas. Ao fundo, a ponte que atravessa a Ipiranga e árvores que margeiam o Arroio Dilúvio. Do outro lado da avenida há um prédio residencial de três andares. Junto à margem direita, uma torre de transmissão de energia. O céu claro é riscado por muitos fios e cabos que acompanham o sentido da Avenida Ipiranga. Em primeiro plano vemos uma árvore grande, cuja copa frondosa ocupa a maior parte da fotografia. Suas raízes estendem-se pelo terreno. Ao fundo, uma área com gramado e árvores é delimitada por fradinhos, pequenos blocos de concreto, utilizados para impedir a circulação de veículos. À esquerda, junto a uma avenida larga, há uma placa de orientação, parcialmente oculta pelos ramos da árvore, onde se lê a palavra “Azenha”. Do outro lado da avenida, vemos uma pequena parte da lateral do Estádio Olímpico. Ainda na Rótula do Papa, vemos de perto a placa de orientação, que indica Teresópolis e Cavalhada à direita, e Azenha seguindo em frente. À esquerda da placa, há um poste onde está afixado um cartaz divulgando um apartamento à venda e uma lixeira em modelo padrão da Prefeitura de Porto Alegre. Há papéis espalhados pelo gramado. Uma fileira de fradinhos demarca a calçada, cruzando a imagem na horizontal, rente à placa e ao poste. Em primeiro plano, uma placa de esquina identifica a Rua José de Alencar. Por trás dela, há um poste de concreto com uma placa de proibido estacionar e à direita, junto à margem da foto, um poste metálico fino com restos de papel colado e duas braçadeiras. Atrás dos postes vemos os galhos de uma árvore e, um pouco além, parte de um semáforo e dois postes de iluminação. Ao longe, avistamos o Morro da Polícia com diversas antenas de telecomunicação instaladas no topo. Legenda: E do Papa de volta à igreja, desta vez a Menino Deus – em cuja praça nasceu a Bossa de Porto Alegre. Acima das copas das árvores, vemos a cruz no topo da torre da Igreja Menino Deus contra o céu claro. A cruz é escura, reta e sem adornos. Da torre, uma estrutura de concreto formada por colunas retas, aparece apenas o topo. Três fios de eletricidade, paralelos, cruzam a parte superior da foto em leve diagonal ascendente. Outros fios passam rente às árvores, por entre os galhos e as folhas. Fotografia da Praça em frente à Igreja Menino Deus. Em uma área calçada com pedra portuguesa estão dispostos três bancos de praça, traçando uma diagonal que tem início no canto inferior esquerdo.  Por trás dos bancos, uma cerca viva demarca um canteiro ajardinado, onde se vê o tronco bifurcado de uma grande árvore, postes de iluminação e a base da torre da igreja, formada por colunas de concreto. Ao fundo, vemos parte da fachada da Igreja, com uma parede branca onde há uma grande janela gradeada, e um paredão de tijolos à vista. O prédio é protegido por uma grade de ferro. Mais além, aparece parte de um prédio residencial vizinho à igreja. Contra o céu nublado, vemos quatro palmeiras enfileiradas. Da primeira, identifica-se o tronco fino e cilíndrico, que corta a foto na vertical. Da segunda, aparece parte do tronco e a copa, no alto da imagem. Das palmeiras mais distantes,vemos apenas as copas. Em primeiro plano, quatro fios de eletricidade atravessam a foto de um lado a outro, em uma suave diagonal descendente. No centro da imagem, um poste de distribuição de energia, visto de baixo, atravessa a foto na vertical. Dele se projeta um braço metálico que serve de suporte para um cabo de sustentação. Inúmeros fios e cabos traçam uma diagonal do canto inferior esquerdo ao canto superior direito da foto, acompanhando o sentido de uma fileira de quatro palmeiras. Apenas quatro fios partem do poste na perpendicular, cruzando a frente de uma das palmeiras em diagonal descendente, revelando tratar-se do cenário da foto anterior. Está terminando o texto. O fim está próximo! Fim!
 */
-
 
 
