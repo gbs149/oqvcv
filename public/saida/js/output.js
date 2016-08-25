@@ -1,29 +1,34 @@
-"use strict";
+$(document).ready(function () {
+    "use strict";
 
-// função recursiva para percorrer array com descrições repetidamente.
-function loopRepeat(array) {
+    var url = "http://192.168.33.10/src/listar-aprovadas.php";
 
-    // se array estiver vazia buscar dados por AJAX
-    if (array.length === 0) {
-        $.get("/src/listar-aprovadas.php", function (data) {
-            loopRepeat(data);
-        });
-    } else {
-        var texto = array.shift();
-        $("#descricao").text(texto);
+    // função recursiva para percorrer array com descrições repetidamente.
+    function loopRepeat(array) {
 
-        responsiveVoice.speak(texto, "Brazilian Portuguese Female",
-            {
-                onend: function () {
-                    setTimeout(function () {
-                        loopRepeat(array);
-                    }, 1000);
-                }
+        // se array estiver vazia buscar dados por AJAX
+        if (array.length === 0) {
+            $.get(url, function (data) {
+                loopRepeat(data);
             });
-    }
-}
+        } else {
+            var texto = array.shift();
+            $("#descricao").text(texto);
 
-loopRepeat([]);
+            responsiveVoice.speak(texto, "Brazilian Portuguese Female",
+                {
+                    onend: function () {
+                        setTimeout(function () {
+                            loopRepeat(array);
+                        }, 1000);
+                    }
+                });
+        }
+    }
+
+    loopRepeat([]);
+
+});
 
 
 /*
