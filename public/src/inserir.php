@@ -5,25 +5,7 @@ $nome = htmlspecialchars($_POST["nome"]);
 $email = htmlspecialchars($_POST["email"]);
 $descricao = htmlspecialchars($_POST["descricao"]);
 
-// conecta com o db usando as credenciais do arquivo settings.php
-try {
-    include('../../settings.php');
-    $pdo = new PDO(
-        sprintf(
-            'mysql:host=%s;dbname=%s;port=%s;charset=%s',
-            $settings['host'],
-            $settings['name'],
-            $settings['port'],
-            $settings['charset']
-        ),
-        $settings['username'],
-        $settings['password']
-    );
-} catch (PDOException $e) {
-    // Database connection failed
-    print "Database connection failed";
-    exit;
-}
+include('conexao.php');
 
 // prepara o statement com os parâmetros e executa
 $sql = "INSERT INTO descricoes (nome, email, descricao) VALUES (:nome, :email, :descricao) ;";

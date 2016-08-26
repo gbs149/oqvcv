@@ -1,24 +1,9 @@
 <?php
-header('Content-Type: application/json');
+// header('Access-Control-Allow-Methods: GET');
+// header('Access-Control-Allow-Origin: *');
+// header('Content-Type: application/json');
 
-try {
-    include('../../settings.php');
-    $pdo = new PDO(
-        sprintf(
-            'mysql:host=%s;dbname=%s;port=%s;charset=%s',
-            $settings['host'],
-            $settings['name'],
-            $settings['port'],
-            $settings['charset']
-        ),
-        $settings['username'],
-        $settings['password']
-    );
-} catch (PDOException $e) {
-    // Database connection failed
-    print "Database connection failed";
-    exit;
-}
+include('conexao.php');
 
 //seleciona somente as descrições aprovadas
 $sql = "SELECT descricao FROM descricoes WHERE aprovado = TRUE;";

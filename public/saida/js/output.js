@@ -12,6 +12,7 @@ $(document).ready(function () {
                 loopRepeat(data);
             });
         } else {
+            console.log(array);
             var texto = array.shift();
             $("#descricao").text(texto);
 

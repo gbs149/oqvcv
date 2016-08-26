@@ -17,7 +17,7 @@ $(document).ready(function () {
             $descricao = $("#descricao").val();
 
         // se os dados forem preenchidos, enviar por POST
-        if ($descricao && $nome && $email) {
+        if ($descricao) {
             $.post(url, {
                 nome: $nome,
                 email: $email,
