@@ -1,43 +1,46 @@
 $(document).ready(function () {
     "use strict";
 
+    var MENSAGENS = [
+        // uma array de strings com as descrições
+        // agora só estamos recebendo as descrições.
+    ];
+
+
+    function enviar(event) {
+        event.preventDefault();
+
+        // Adiciona os dados e mensagem ao array de mensagens (que vai ser enviado a cada 30 minutos)
+        MENSAGENS.push($("#descricao").val());
+
+        // limpa os campos do formulário
+        $("#descricao").val("");
+
+        // por enquanto deixamos assim, mas seria mais legal uma mensagem bonitinha na tela que ficasse por uns 5 segundos e desaparecesse
+        alert("Sua mensagem foi adicionada. \nObrigado!");
+    };
 
     // click no botão envia a descrição
     $("#enviar").on("click", enviar);
 
-    var url = "http://192.168.33.10/src/inserir.php";
+    // seta o timer de envio das mensagens
+    var TIMER = setInterval(function () {
 
-    //
-    function enviar(event) {
-        event.preventDefault();
+        // transforma o objeto json em string para o envio
+        var textMessages = JSON.stringify(MENSAGENS);
+        console.log(textMessages);
 
-        // recebe os valores do formulário
-        var $nome = $("#nome").val(),
-            $email = $("#email").val(),
-            $descricao = $("#descricao").val();
+        // faz o post das mensagens
+        $.post("/src/inserir.php", {
+            mensagens: textMessages
+        },
+            // se sucesso, limpa a variável global MENSAGENS
+            // senão deixa por isso mesmo e ela , automaticamente, será reenviada (tentativa de) após 30 minutos
+            function (data) {
+                if (data === "sucesso") {
+                    MENSAGENS = [];
+                }
+            }, "text");
+    }, 10 * 60000); // = 10min
 
-        // se os dados forem preenchidos, enviar por POST
-        if ($descricao) {
-            $.post(url, {
-                nome: $nome,
-                email: $email,
-                descricao: $descricao
-            },
-                // se sucesso, limpa o formulário e exibe confirmação
-                // senão exibe alerta e mantém o formulário preenchido
-                function (data) {
-                    if (data === "sucesso") {
-                        $("#nome").val("");
-                        $("#email").val("");
-                        $("#descricao").val("");
-                        alert("Seus dados foram enviados. \nObrigado!")
-                    } else
-                        alert("Erro de conexão. \nTente novamente.")
-
-                }, "text");
-
-        }
-    };
 });
-
-

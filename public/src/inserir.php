@@ -1,26 +1,38 @@
 <?php
 
-// recebe as informações por POST e filtra os dados
-$nome = htmlspecialchars($_POST["nome"]);
-$email = htmlspecialchars($_POST["email"]);
-$descricao = htmlspecialchars($_POST["descricao"]);
+// recebe as mesnagens por POST
+$descricoes = json_decode($_POST["mensagens"]);
+$sucesso;
 
+// sanitiza as strings na array $descricoes
+foreach ($descricoes as &$item) {
+    $item = htmlspecialchars($item);
+}
+unset($item);
+
+// conecta e insere as descrições no db
 include('conexao.php');
+foreach($descricoes as $desc) {
 
-// prepara o statement com os parâmetros e executa
-$sql = "INSERT INTO descricoes (nome, email, descricao) VALUES (:nome, :email, :descricao) ;";
+    // prepara o statement com os parâmetros e executa
+    $sql = "INSERT INTO descricoes (descricao) VALUES (:descricao) ;";
 
-$statement = $pdo->prepare($sql);
+    $statement = $pdo->prepare($sql);
+    $statement->bindValue(':descricao', $desc);
 
-$statement->bindValue(':nome', $nome);
-$statement->bindValue(':email', $email);
-$statement->bindValue(':descricao', $descricao);
+    // executa a gravação no db
+    $sucesso = $statement->execute();
 
-// executa a gravação no db
-$sucesso = $statement->execute();
+    // para em caso de falha
+    if(!$sucesso){
+        break;
+    }
+}
+unset($item);
 
 // se a gravação for bem sucedida retorna "sucesso"
-if ($sucesso)
-echo "sucesso";
+if ($sucesso){
+    echo "sucesso";
+}
 
 

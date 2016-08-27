@@ -16,6 +16,7 @@ $lista = $statement->fetchAll(PDO::FETCH_NUM);
 foreach( $lista as &$item ) {
     $item = $item[0];
 }
+unset($item);
 
 //prepara e retorna como json
 $json = htmlspecialchars_decode(json_encode($lista));
