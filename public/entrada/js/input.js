@@ -40,7 +40,7 @@ $(document).ready(function () {
                 if (data === "sucesso") {
                     MENSAGENS = [];
                 }
-            }, "text");
-    }, 10 * 60000); // = 10min
+            });
+    }, 30 * 60000); // = 30min
 
 });

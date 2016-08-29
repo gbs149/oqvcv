@@ -2,15 +2,13 @@ $(document).ready(function () {
     "use strict";
 
     var url = "http://192.168.33.10/src/listar-aprovadas.php";
+    var descricoes = [];
 
     // função recursiva para percorrer array com descrições repetidamente.
     function loopRepeat(array) {
-
-        // se array estiver vazia buscar dados por AJAX
+        // se array estiver vazia buscar array com descrições
         if (array.length === 0) {
-            $.get(url, function (data) {
-                loopRepeat(data);
-            });
+            loopRepeat(descricoes.slice());
         } else {
             var texto = array.shift();
             $("#descricao").text(texto);
@@ -26,7 +24,21 @@ $(document).ready(function () {
         }
     }
 
-    loopRepeat([]);
+    // inicia o programa buscando dados e
+    $.get(url, function (data) {
+        descricoes = data;
+        // inicia o loop com uma cópia de descrições. Mantém a array descricoes para ser reutilizada.
+        loopRepeat(descricoes.slice());
+    });
+
+
+    // timer para atualizar descricoes a cada 10 minutos
+    setTimeout(function () {
+        $.get(url, function (data) {
+            descricoes = data;
+        });
+    }, 10 * 60000);
+
 });
 
 
