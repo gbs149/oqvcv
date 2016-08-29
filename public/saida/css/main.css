@@ -56,7 +56,25 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
+#container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
+
+    width: 100vw;
+    height: 100vh;
+
+
+    background-color: #111;
+    color: #ddd;
+}
+
+#descricao {
+    font-size: 2em;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    max-width: 60%;
+}
 
 
 /* ==========================================================================

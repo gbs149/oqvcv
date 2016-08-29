@@ -6,38 +6,44 @@ $(document).ready(function () {
 
     // função recursiva para percorrer array com descrições repetidamente.
     function loopRepeat(array) {
-        // se array estiver vazia buscar array com descrições
+
+        // se array estiver vazia reiniciar função com array descrições
         if (array.length === 0) {
-            loopRepeat(descricoes.slice());
+            loopRepeat(descricoes);
         } else {
-            var texto = array.shift();
+            // copia array para dados
+            var dados = array.slice();
+
+            // retira o primeiro string de dados e usa como texto para reprodução e parágrafo
+            var texto = dados.shift();
             $("#descricao").text(texto);
 
             responsiveVoice.speak(texto, "Brazilian Portuguese Female",
                 {
+                    // ao fim da reprodução, chama recursivamente a função
                     onend: function () {
                         setTimeout(function () {
-                            loopRepeat(array);
+                            loopRepeat(dados);
                         }, 1000);
                     }
                 });
         }
     }
 
-    // inicia o programa buscando dados e
+    // inicia o programa buscando dados
     $.get(url, function (data) {
         descricoes = data;
         // inicia o loop com uma cópia de descrições. Mantém a array descricoes para ser reutilizada.
-        loopRepeat(descricoes.slice());
+        loopRepeat(descricoes);
     });
 
 
-    // timer para atualizar descricoes a cada 10 minutos
-    setTimeout(function () {
+    // timer para atualizar descricoes a cada 20 minutos
+    var timer = setInterval(function () {
         $.get(url, function (data) {
             descricoes = data;
         });
-    }, 10 * 60000);
+    }, 5 * 1000);
 
 });
 
