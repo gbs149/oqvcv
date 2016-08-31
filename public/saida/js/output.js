@@ -3,6 +3,8 @@ $(document).ready(function () {
 
     var url = "http://192.168.33.10/src/listar-aprovadas.php";
     var descricoes = [];
+    var sec = 1000, min = 60000;
+
 
     // função recursiva para percorrer array com descrições repetidamente.
     function loopRepeat(array) {
@@ -11,24 +13,31 @@ $(document).ready(function () {
         if (array.length === 0) {
             loopRepeat(descricoes);
         } else {
-            // copia array para dados
+            // copia array para dados para não apagar as descrições
             var dados = array.slice();
 
             // retira o primeiro string de dados e usa como texto para reprodução e parágrafo
             var texto = dados.shift();
             $("#descricao").text(texto);
 
-            responsiveVoice.speak(texto, "Brazilian Portuguese Female",
-                {
-                    // ao fim da reprodução, chama recursivamente a função
-                    onend: function () {
-                        setTimeout(function () {
-                            loopRepeat(dados);
-                        }, 1000);
-                    }
-                });
+            // função de síntese de voz.
+            var synth = window.speechSynthesis;
+            var utterThis = new SpeechSynthesisUtterance(texto);
+
+            utterThis.pitch = 1.2;
+            utterThis.rate = 1.2;
+            synth.speak(utterThis);
+
+            // ao final do texto, chama recursivamente a função com dados (array a partir do segundo elemento)
+            utterThis.onend = function () {
+                setTimeout(function () {
+                    loopRepeat(dados);
+                }, 2000) // intervalo entre uma descrição e outra
+            };
         }
     }
+
+
 
     // inicia o programa buscando dados
     $.get(url, function (data) {
@@ -38,29 +47,12 @@ $(document).ready(function () {
     });
 
 
+
     // timer para atualizar descricoes a cada 20 minutos
     var timer = setInterval(function () {
         $.get(url, function (data) {
             descricoes = data;
         });
-    }, 5 * 1000);
+    }, 2 * min);
 
 });
-
-
-/*
-
-teste com 10.000 caracteres.
-tempo: 13'20" - 800s.
-caracteres por segundo: 12.5
-
-Responsive Voice
-voz:"Brazilian Portuguese Female"
-pitch: 1
-rate: 1
-
-PROBLEMA: no Chrome, usa corta o texto em partes menores (100 caracteres), cortando as frases.
-
-*/
-
-
