@@ -7,19 +7,19 @@
     <title>O que você vê</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>-->
-
     <link rel="stylesheet" href="css/normalize.min.css">
     <link rel="stylesheet" href="css/main.css">
-    <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>-->
-
 </head>
 
 <body>
     <div class="pagina">
-
-        <!--<h1>Descreva o que você vê</h1>-->
-        <h2 class="hidden">Descrição enviada com sucesso!</h2>
+        <div id="confirmacao">
+            <div class="overlay">
+                <div class="confirmacao_mensagem">
+                    <p>Sua mensagem foi adicionada. <br> Obrigado!</p>
+                </div>
+            </div>
+        </div>
 
         <form>
             <div id="logo"></div>
@@ -34,7 +34,7 @@
             <input type="tel" id="telefone" name="telefone" value="" placeholder="" required>-->
 
             <label for="descricao">Descreva abaixo o que você vê (<span id="contador">300</span> caracteres restantes)</label>
-            <textarea id="descricao" name="descricao" rows="8" cols="70" maxlength="300" autocomplete="off" autofocus placeholder="" required></textarea>
+            <textarea id="descricao" name="descricao" rows="8" cols="70" maxlength="300" autocomplete="off" autofocus placeholder=""></textarea>
 
             <button id="enviar">Clique aqui para adicionar a sua mensagem</button>
         </form>

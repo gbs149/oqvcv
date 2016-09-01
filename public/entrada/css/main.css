@@ -141,6 +141,44 @@ button:hover, button:active {
     display: block;
 }
 
+
+
+#confirmacao {
+    display: none;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: rgba(0,0,0,0.3);
+}
+
+.confirmacao_mensagem {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 40%;
+    height: 30%;
+
+    border-radius: 8px;
+    background-color: #222;
+
+    color: #ddd;
+    font-size: 2em;
+    line-height: 1.6em;
+
+}
+
 /* ==========================================================================
    Media Queries
    ========================================================================== */
