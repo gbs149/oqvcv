@@ -2,7 +2,7 @@ $(document).ready(function () {
     "use strict";
 
     var url = "http://192.168.33.10/src/listar-aprovadas.php";
-    var descricoes = [];
+    var descricoes = ["Primeira descrição", "Segunda descrição", "Terceira descrição", "Etcetera"];
     var sec = 1000, min = 60000;
 
 
@@ -28,7 +28,7 @@ $(document).ready(function () {
             utterThis.rate = 1.2;
             synth.speak(utterThis);
 
-            // ao final do texto, chama recursivamente a função com dados (array a partir do segundo elemento)
+            // ao final do texto, chama recursivamente a função com dados (que é array a partir do segundo elemento)
             utterThis.onend = function () {
                 setTimeout(function () {
                     loopRepeat(dados);
@@ -37,12 +37,16 @@ $(document).ready(function () {
         }
     }
 
+    // PARA TESTE
+    // inicia o programa com array descricoes
+    loopRepeat(descricoes);
 
 
-    // inicia o programa buscando dados
+
+    // inicia o programa fazendo GET
     $.get(url, function (data) {
         descricoes = data;
-        // inicia o loop com uma cópia de descrições. Mantém a array descricoes para ser reutilizada.
+        // inicia o loop
         loopRepeat(descricoes);
     });
 
@@ -53,6 +57,6 @@ $(document).ready(function () {
         $.get(url, function (data) {
             descricoes = data;
         });
-    }, 2 * min);
+    }, 20 * min);
 
 });
