@@ -23,6 +23,11 @@ $(document).ready(function () {
     // click no botão envia a descrição
     $("#enviar").on("click", enviar);
 
+    // contador de caracteres restantes
+    $("#descricao").keyup(function() {
+        $("#contador").text(300 - $("#descricao").val().length);
+    });
+
     // seta o timer de envio das mensagens
     var TIMER = setInterval(function () {
 
