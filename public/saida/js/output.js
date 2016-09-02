@@ -2,7 +2,9 @@ $(document).ready(function () {
     "use strict";
 
     var url = "http://192.168.33.10/src/listar-aprovadas.php";
-    var descricoes = ["Primeira descrição", "Segunda descrição", "Terceira descrição", "Etcetera"];
+    var descricoes = [];
+    // para teste
+    // var descricoes = ["Primeira descrição", "Segunda descrição", "Terceira descrição", "Etcetera"];
     var sec = 1000, min = 60000;
 
 
@@ -25,7 +27,8 @@ $(document).ready(function () {
             var utterThis = new SpeechSynthesisUtterance(texto);
 
             utterThis.pitch = 1.2;
-            utterThis.rate = 1.2;
+            utterThis.rate = 1.4;
+            utterThis.lang = "pt-BR";
             synth.speak(utterThis);
 
             // ao final do texto, chama recursivamente a função com dados (que é array a partir do segundo elemento)
@@ -39,7 +42,7 @@ $(document).ready(function () {
 
     // PARA TESTE
     // inicia o programa com array descricoes
-    loopRepeat(descricoes);
+    // loopRepeat(descricoes);
 
 
 
