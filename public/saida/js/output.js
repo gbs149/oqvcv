@@ -3,8 +3,8 @@ $(document).ready(function () {
 
     var url = "http://192.168.33.10/src/listar-aprovadas.php";
 
-    var descricoes = ["1", "2", "3", "4", "5", "6", "7", "8"],
-        descricoesPre = ["a", "b", "c", "d"];
+    var descricoes = [],
+        descricoesPre = ["número 1", "número 2", "número 3", "número 4"];
 
     var sec = 1000, min = 60000;
 
@@ -96,21 +96,25 @@ $(document).ready(function () {
 
 
 
-/*
+
+    /*
     // inicia o programa fazendo GET
     $.get(url, function (data) {
         descricoes = data;
         // inicia o loop
-        loopRepeat(descricoes);
+        loopRepeat(getArrays([descricoes, descricoesPre]), 1);
     });
+    */
 
 
 
+    /*
     // timer para atualizar descricoes a cada 20 minutos
     var timer = setInterval(function () {
         $.get(url, function (data) {
             descricoes = data;
         });
     }, 20 * min);
-*/
+    */
+
 });
