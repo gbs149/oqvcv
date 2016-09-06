@@ -72,7 +72,8 @@ textarea {
 
 #descricao {
     font-size: 2em;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-family: 'Noto Sans', sans-serif;
+    line-height: 1.5;
     max-width: 60%;
 }
 
