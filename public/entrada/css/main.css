@@ -60,12 +60,14 @@ textarea {
     width: 100vw;
     height: 100vh;
 
+    padding-top: 1em;
+
     background-color: #222;
     color: #eee;
 
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
 }
 
 form {
@@ -78,7 +80,7 @@ input {
     padding: 0.5rem;
     margin-bottom: 0.5rem;
 
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     color: #444;
 
     border: 1px solid #ccc;
@@ -93,7 +95,7 @@ textarea {
     padding: 0.5rem;
     margin-bottom: 0.5rem;
 
-    font-size: 1.2rem;
+    font-size: 1.8rem;
     color: #444;
 
     border: 1px solid #ccc;
@@ -115,7 +117,7 @@ button {
     border: none;
     padding: 0.5rem;
 
-    font-size: 1.5rem;
+    font-size: 2rem;
     text-shadow: 0 1px 2px #354a24;
 
     background-color: #629b30;
