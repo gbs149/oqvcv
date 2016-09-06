@@ -64,5 +64,25 @@ $(document).ready(function () {
         $contador.text(300 - $descricao.val().length);
     });
 
+    $("#enter-fullscreen").on("click", enterFullScreen);
+
+    function enterFullScreen() {
+        $("#fullscreen-msg").addClass("hidden");
+
+        var docElm = document.documentElement;
+        if (docElm.requestFullscreen) {
+            docElm.requestFullscreen();
+        }
+        else if (docElm.mozRequestFullScreen) {
+            docElm.mozRequestFullScreen();
+        }
+        else if (docElm.webkitRequestFullScreen) {
+            docElm.webkitRequestFullScreen();
+        }
+        else if (docElm.msRequestFullscreen) {
+            docElm.msRequestFullscreen();
+        }
+    }
+
 
 });
