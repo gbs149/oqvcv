@@ -79,14 +79,14 @@ $(document).ready(function () {
     function getArrays(array) {
         var newArray1, newArray2;
         if (array[0].length === 0 && array[1].length === 0) {
-            newArray1 = descricoesDoPublico.slice();
-            newArray2 = descricoesPreescritas.slice();
+            newArray1 = shuffleArray(descricoesDoPublico.slice());
+            newArray2 = shuffleArray(descricoesPreescritas.slice());
         } else if (array[0].length === 0 && array[1].length > 0) {
-            newArray1 = descricoesDoPublico.slice();
+            newArray1 = shuffleArray(descricoesDoPublico.slice());
             newArray2 = array[1].slice();
         } else if (array[0].length > 0 && array[1].length === 0) {
             newArray1 = array[0].slice();
-            newArray2 = descricoesPreescritas.slice();
+            newArray2 = shuffleArray(descricoesPreescritas.slice());
         } else if (array[0].length > 0 && array[1].length > 0) {
             newArray1 = array[0].slice();
             newArray2 = array[1].slice();
