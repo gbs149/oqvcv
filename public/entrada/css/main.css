@@ -57,7 +57,7 @@ fieldset {
     min-width: 100vw;
     min-height: 100vh;
 
-    padding-top: 1em;
+    padding: 0;
 
     background-color: #141414;
     color: #eee;
@@ -78,15 +78,21 @@ textarea {
     padding: 0.5rem;
     margin-bottom: 0.5rem;
 
-    font-size: 1.4rem;
-    background-color: #141414;
-    color: #eee;
+    font-size: 2rem;
+    background-color: #eee;
+    color: #151515;
 
     /*border: none;*/
     border-radius: 4px;
     box-sizing: border-box;
 
     outline: none;
+}
+
+label {
+    padding: 0.5rem 0;
+    font-size: 1.8rem;
+
 }
 
 
@@ -96,18 +102,13 @@ textarea {
 input:-moz-placeholder {      color:#ccc; }
 
 
-p {
-    font-size: 1.4em;
-    margin: 0;
-}
-
 
 button {
     display: block;
     border: none;
-    padding: 0.5rem;
+    padding: 0.8rem;
 
-    font-size: 1.4rem;
+    font-size: 2rem;
     font-weight: 700;
     text-shadow: 1px 1px 2px rgba(20,20,20,0.2);
     background-color: #00dfff;
@@ -139,12 +140,13 @@ button:hover, button:active {
 
     width: 100%;
     height: 100%;
+    padding-top: 4rem;
 
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
 
-    background-color: rgba(0,0,0,0.7);
+    background-color: rgba(0,0,0,0.8);
 }
 
 .confirmacao_mensagem {
@@ -154,13 +156,14 @@ button:hover, button:active {
 
     width: 40%;
     height: 30%;
-    padding: 2em;
+    padding: 1.4rem;
 
     border-radius: 8px;
-    background-color: #121212;
+    background-color: #eee;
 
-    color: #ddd;
-    font-size: 2em;
+    color: #121212;
+    font-size: 2rem;
+    font-weight: 700;
     line-height: 1.6em;
 }
 
