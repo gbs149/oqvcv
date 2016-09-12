@@ -89,9 +89,15 @@ textarea {
 }
 
 label {
-    padding: 0.5rem 0;
+    padding: 1.2rem 0 0.5rem 0;
     font-size: 1.8rem;
+}
 
+.contador-de-caracteres {
+    align-self: flex-end;
+
+    font-size: 1.7rem;
+    margin: 0;
 }
 
 

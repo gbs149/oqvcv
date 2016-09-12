@@ -10,31 +10,6 @@ $(document).ready(function () {
         $contador = $("#contador"),
         $confirmacao = $("#confirmacao");
 
-    /*function enviar(event) {
-        event.preventDefault();
-
-        if ($descricao.val()) {
-
-            // Adiciona os dados e mensagem ao array de mensagens (que vai ser enviado a cada 30 minutos)
-            MENSAGENS.push($descricao.val());
-
-            // limpa os campos do formulário
-            $descricao.val("");
-            $descricao.focus();
-
-            // reseta o contador
-            $contador.text(300);
-
-            // por enquanto deixamos assim, mas seria mais legal uma mensagem bonitinha na tela que ficasse por uns 5 segundos e desaparecesse
-            // alert("Sua mensagem foi adicionada. \nObrigado!");
-            $confirmacao.fadeIn(300, function () {
-                setTimeout(function () {
-                    $confirmacao.fadeOut(400);
-                }, 3000);
-            });
-        }
-    };*/
-
     function enviarDescricoes(event) {
         event.preventDefault();
 
