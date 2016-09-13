@@ -4,13 +4,14 @@ $(document).ready(function () {
     var url = "/src/listar-aprovadas.php";
 
     var descricoesDoPublico = [],
-        descricoesPreescritas = ["Dois casebres contíguos, cada um deles com dois pavimentos. Em cada piso há uma porta     e uma janela, configurando quatro residências.  As paredes são azuis e as portas e                              janelas são amarelas. A madeira parece apodrecida e a tinta está velha e desbotada. A                           sensação é de equilíbrio precário.",
-            "Casebres de madeira empilhados, pintados de cores vivas e contrastantes. Uma moça de biquini grafitada numa das paredes e, no chão, a estatueta de um frade segurando no colo um menino nu. Arte sacra e profana convivendo num clima de miséria colorida. Um gato na janela, com sua felina empáfia, observa o observador.",
-            "A parede da casa da esquerda, no andar de baixo, é a única verde e tem uma mulher estampada, bem grande, entre a janela e a porta. Ela está de biquíni tomara que caia. Tem pele clara e cabelos castanhos e compridos que se agitam com o vento.",
-            "Na casa de cima, à esquerda, a porta e a janela são de madeira clara e desbotada. Sobre a janela há um telhadinho de zinco, torto e enferrujado. Na porta tem um visor retangular com três adesivos: o Sagrado Coração de Jesus, um pequeno mapa do Brasil e uma imagem de Nossa Senhora Aparecida.",
-            "No chão, entre os casebres, há uma imagem de um santo com o Menino Jesus no colo. A imagem está deteriorada, com a pintura descascada, e o branco do gesso aparece em vários pontos."];
+        descricoesPreescritas = ["Dois casebres contíguos, cada um deles com dois pavimentos. Em cada pavimento há uma porta e uma janela, configurando quatro residências. As paredes são azuis e as portas e janelas são amarelas. A madeira parece apodrecida e a tinta está velha e desbotada. A sensação é de equilíbrio precário.",
+        "Casebres de madeira empilhados, pintados de cores vivas e contrastantes. Uma moça de biquini grafitada numa das paredes e, no chão, a estatueta de um frade segurando no colo um menino nu. Arte sacra e profana convivendo num clima de miséria colorida. Um gato na janela, com sua felina empáfia, observa o observador.",
+        "A parede da casa da esquerda, no andar de baixo, é a única verde e tem uma mulher estampada, bem grande, entre a janela e a porta. Ela está de biquíni tomara que caia. Tem pele clara e cabelos castanhos e compridos que se agitam com o vento.",
+        "Na casa de cima, à esquerda, a porta e a janela são de madeira clara e desbotada. Sobre a janela há um telhadinho de zinco, torto e enferrujado. Na porta tem um visor retangular com três adesivos: o Sagrado Coração de Jesus, um pequeno mapa do Brasil e uma imagem de Nossa Senhora Aparecida.",
+        "No chão, entre os casebres, há uma imagem de um santo com o Menino Jesus no colo. A imagem está deteriorada, com a pintura descascada, e o branco do gesso aparece em vários pontos."];
 
     const SEGUNDO = 1000, MINUTO = 60000;
+	var ANIM_SPEED = 600;
 
 
 
@@ -29,22 +30,28 @@ $(document).ready(function () {
             // retira o primeiro string de dados e usa como texto para reprodução e parágrafo
             var texto = descricoesPublico.shift();
             console.log(texto);
-            $("#descricao").text(texto);
+            $("#descricao").stop().animate({opacity: 0}, ANIM_SPEED, function() {
+				$("#descricao").text(texto).stop().animate({opacity: 1}, ANIM_SPEED, function() {
+                    speakText(texto, function () {
+                        loopRepeat(getArrays(arraysDescricoes), contador);
+                    });
+                });
+			});
 
-            speakText(texto, function () {
-                loopRepeat(getArrays(arraysDescricoes), contador);
-            });
 
         } else {
 
             // retira o primeiro string de dados e usa como texto para reprodução e parágrafo
             var texto = descricoesPre.shift();
             console.log(texto);
-            $("#descricao").text(texto);
-
-            speakText(texto, function () {
-                loopRepeat(getArrays(arraysDescricoes), 1);
+            $("#descricao").stop().animate({opacity: 0}, ANIM_SPEED, function() {
+				$("#descricao").text(texto).stop().animate({opacity: 1}, ANIM_SPEED, function() {
+                    speakText(texto, function () {
+                        loopRepeat(getArrays(arraysDescricoes), 1);
+                    });
+                });
             });
+
 
         }
 
@@ -60,7 +67,7 @@ $(document).ready(function () {
 
         textToSpeak.volume = 1;
         textToSpeak.pitch = 1.2;
-        textToSpeak.rate = 1.4;
+        textToSpeak.rate = 1.3;
         textToSpeak.lang = "pt-BR";
 
         synth.speak(textToSpeak);
@@ -140,5 +147,13 @@ $(document).ready(function () {
         });
     }, 20 * MINUTO);
 
+	/*// desabilita click com botão direito
+
+	window.onmousedown = function disableclick(event) {
+
+		if(event.button == 2) {
+			return false;
+		}
+	};*/
 
 });

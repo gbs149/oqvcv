@@ -75,6 +75,11 @@ $(document).ready(function () {
         }
     }, 2 * 60000); // = 2min
 
+    // previne seleção por touch
+    /*$('body').on('touchstart touchend touchmove', function(event) {
+        event.preventDefault();
+    });*/
+
 
 
     // click no botão envia a descrição
