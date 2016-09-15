@@ -23,7 +23,6 @@ $(document).ready(function () {
 
             // transforma o objeto json em string para o envio
             var textMessages = JSON.stringify(umaDescricao);
-            console.log(textMessages);
 
             // limpa os campos do formulário
             $descricao.val("");
@@ -40,26 +39,38 @@ $(document).ready(function () {
             });
 
             // faz o post da mensagem. Se falhar, guarda a descrição para mandar depois.
-            $.post("/src/inserir.php", {
-                mensagens: textMessages
-            },
-                function (data) {
-                    if (data !== "sucesso") {
+            var ajaxOptions = {
+                method:"POST",
+                data: { mensagens: textMessages },
+                url: "/src/inserir.php",
+                timeout: 10000,
+                success: function (returnData) {
+                    console.log(returnData);
+                    if (returnData === "sucesso") {
+                        console.log("Sucesso: ", textMessages);
+                    } else {
                         MENSAGENS.push(textoDescricao);
+                        console.log("Armazenado em ", MENSAGENS);
                     }
-                });
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    MENSAGENS.push(textoDescricao);
+                    console.log(textStatus, errorThrown, MENSAGENS);
+                }
+            };
+
+            $.ajax(ajaxOptions);
         }
     }
+
 
     // seta o timer de envio das mensagens
     var TIMER = setInterval(function () {
 
         if (MENSAGENS) {
 
-
             // transforma o objeto json em string para o envio
             var textMessages = JSON.stringify(MENSAGENS);
-            console.log(textMessages);
 
             // faz o post das mensagens
             $.post("/src/inserir.php", {
@@ -69,17 +80,12 @@ $(document).ready(function () {
                 // senão deixa por isso mesmo e ela , automaticamente, será reenviada (tentativa de) após 30 minutos
                 function (data) {
                     if (data === "sucesso") {
+                        console.log("mensagens enviadas com sucesso a partir do cache.", MENSAGENS);
                         MENSAGENS = [];
                     }
                 });
         }
     }, 2 * 60000); // = 2min
-
-    // previne seleção por touch
-    /*$('body').on('touchstart touchend touchmove', function(event) {
-        event.preventDefault();
-    });*/
-
 
 
     // click no botão envia a descrição
