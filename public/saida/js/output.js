@@ -16,7 +16,6 @@ $(document).ready(function () {
             $("#descricao").stop().animate({opacity: 0}, ANIM_SPEED, function() {
 				$("#descricao").text(texto).stop().animate({opacity: 1}, ANIM_SPEED, function() {
                     speakText(texto, function () {
-                        console.log(arraysDescricoes);
                         loopRepeat(fetchShuffledArrayIfEmpty(arraysDescricoes));
                     });
                 });
