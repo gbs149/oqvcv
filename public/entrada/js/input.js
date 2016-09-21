@@ -3,7 +3,6 @@ $(document).ready(function () {
 
     var MENSAGENS = [
         // uma array de strings com as descrições
-        // agora só estamos recebendo as descrições.
     ];
 
     var $descricao = $("#descricao"),
@@ -45,17 +44,12 @@ $(document).ready(function () {
                 url: "/src/inserir.php",
                 timeout: 10000,
                 success: function (returnData) {
-                    console.log(returnData);
-                    if (returnData === "sucesso") {
-                        console.log("Sucesso: ", textMessages);
-                    } else {
+                    if (returnData !== "sucesso") {
                         MENSAGENS.push(textoDescricao);
-                        console.log("Armazenado em ", MENSAGENS);
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     MENSAGENS.push(textoDescricao);
-                    console.log(textStatus, errorThrown, MENSAGENS);
                 }
             };
 
@@ -80,7 +74,6 @@ $(document).ready(function () {
                 // senão deixa por isso mesmo e ela , automaticamente, será reenviada (tentativa de) após 30 minutos
                 function (data) {
                     if (data === "sucesso") {
-                        console.log("mensagens enviadas com sucesso a partir do cache.", MENSAGENS);
                         MENSAGENS = [];
                     }
                 });
