@@ -1,5 +1,5 @@
 <?php
-include "../../senha.php";
+include "../../hash.php";
 
 $senha = $_POST['senha'];
 
@@ -11,7 +11,6 @@ if (password_verify($senha, $hash)) {
     header("Location: ../moderacao");
 } else {
     header("Location: ../moderacao/login-form.php");
-
 }
 
 

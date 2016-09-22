@@ -25,28 +25,38 @@ function preencherPagina(data) {
 function salvar() {
     var data = [], dataJSON;
 
-    $('.item-lista').each(function () {
-        var objectData = {};
-        objectData.id = $(this).find('.element-id').text();
-        objectData.descricao = $(this).find('textarea').val();
-        objectData.moderado = true;
-        if($(this).find('input[type="checkbox"]').prop('checked')) {
-            objectData.aprovado = 1;
-        } else {
-            objectData.aprovado = 0;
-        }
-        data.push(objectData);
-    });
+    var $lista = $('.item-lista');
 
-    dataJSON = JSON.stringify(data);
+    if ($lista.length > 0) {
 
-    var ajaxOptionsSalvar = {
-        method: 'POST',
-        data: {mensagens: dataJSON},
-        url: urlSalvarModeracao
-    };
+        $lista.each(function () {
+            var objectData = {};
+            objectData.id = $(this).find('.element-id').text();
+            objectData.descricao = $(this).find('textarea').val();
+            objectData.moderado = true;
+            if ($(this).find('input[type="checkbox"]').prop('checked')) {
+                objectData.aprovado = 1;
+            } else {
+                objectData.aprovado = 0;
+            }
+            data.push(objectData);
+        });
 
-    $.post(ajaxOptionsSalvar);
+        dataJSON = JSON.stringify(data);
+
+        var ajaxOptionsSalvar = {
+            method: 'POST',
+            data: { mensagens: dataJSON },
+            url: urlSalvarModeracao,
+            success: function () {
+                document.location.reload(true);
+            }
+        };
+
+        $.post(ajaxOptionsSalvar);
+
+
+    }
 
 
 
