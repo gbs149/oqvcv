@@ -1,3 +1,5 @@
+<?php session_start(); ?>
+
 <!doctype html>
 <html class="no-js" lang="pt-br">
 
@@ -7,15 +9,20 @@
     <title>O que você vê</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>-->
-    <!--<link rel="stylesheet" href="css/normalize.min.css">-->
     <link rel="stylesheet" href="css/style.css">
-    <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>-->
 
 </head>
 
 <body>
+    <div>
+        <form method="GET" action="../src/sair.php">
+            <button type="submit">sair</button>
+        </form>
+    </div>
 
+<?php
+    if ( $_SESSION['logado'] == TRUE ) {
+?>
     <table id="table">
         <tr>
             <th>ID</th>
@@ -35,6 +42,11 @@
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="js/moderacao.js"></script>
+<?php
+    } else {
+        header("Location: login-form.php");
+    }
+?>
 </body>
 
 </html>
