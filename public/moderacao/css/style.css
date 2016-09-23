@@ -1,0 +1,36 @@
+* {
+  margin: 0.2rem;
+  padding: 0;
+}
+
+html {
+  font-family: sans-serif;
+  font-size: 1em;
+}
+
+th {
+  font-size: 1.6rem;
+}
+
+.element-id {
+  width: 3rem;
+  font-size: 1.6rem
+}
+
+.text-area {
+  width: 45rem;
+}
+
+textarea {
+  font-family: verdana;
+  padding: 0.3rem
+}
+
+.check-aprovado {
+  width: 4rem;
+}
+
+button {
+  padding: 0.5rem;
+  font-size: 1.5rem;
+}
