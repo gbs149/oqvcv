@@ -19,7 +19,7 @@ foreach( $lista as &$item ) {
 unset($item);
 
 //prepara e retorna como json
-$json = htmlspecialchars_decode(json_encode($lista));
+$json = json_encode($lista);
 echo $json;
 
 

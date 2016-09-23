@@ -12,7 +12,7 @@ $statement->execute();
 
 $lista = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-$json = htmlspecialchars_decode(json_encode($lista));
+$json = json_encode($lista);
 
 echo $json;
 
