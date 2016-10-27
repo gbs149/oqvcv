@@ -1,34 +1,38 @@
+"use strict";
+
 $(document).ready(function () {
-    "use strict";
 
-    var url = "/src/listar-aprovadas.php";
+    const url = "/src/listar-aprovadas.php";
 
-    var descricoesDoPublico = [];
+    let publicDescriptions = [];
 
-    const SEGUNDO = 1000, MINUTO = 60000;
-	var ANIM_SPEED = 600;
+    const SECOND = 1000, MINUTE = 60000;
+    const ANIM_SPEED = 600;
 
 
-    // função recursiva para percorrer array com descrições repetidamente,
-    function loopRepeat(arraysDescricoes) {
 
-            var texto = arraysDescricoes.shift();
-            $("#descricao").stop().animate({opacity: 0}, ANIM_SPEED, function() {
-				$("#descricao").text(texto).stop().animate({opacity: 1}, ANIM_SPEED, function() {
+    function loopAndRepeat(arraysDescricoes, index) {
+        if (index === arraysDescricoes.length - 1) {
+            loopAndRepeat(shuffleArray(publicDescriptions), 0);
+        } else {
+            let texto = arraysDescricoes[index];
+            $("#descricao").stop().animate({ opacity: 0 }, ANIM_SPEED, function () {
+                $("#descricao").text(texto).stop().animate({ opacity: 1 }, ANIM_SPEED, function () {
                     speakText(texto, function () {
-                        loopRepeat(fetchShuffledArrayIfEmpty(arraysDescricoes));
+                        loopAndRepeat(arraysDescricoes, index + 1);
                     });
                 });
-			});
+            });
+        }
     }
 
 
-    // função de síntese de voz.
-    function speakText(texto, callback) {
-        var intervalo = 2 * SEGUNDO;
 
-        var synth = window.speechSynthesis;
-        var textToSpeak = new SpeechSynthesisUtterance(texto);
+    function speakText(text, callback) {
+        const interval = 2 * SECOND;
+
+        const synth = window.speechSynthesis;
+        let textToSpeak = new SpeechSynthesisUtterance(text);
 
         textToSpeak.volume = 1;
         textToSpeak.pitch = 1.2;
@@ -37,61 +41,45 @@ $(document).ready(function () {
 
         synth.speak(textToSpeak);
 
-        // ao final do texto, chama uma callback
         textToSpeak.onend = function () {
-
             synth.cancel();
-
             setTimeout(function () {
                 callback();
-            }, intervalo) // intervalo entre uma descrição e outra
+            }, interval) 
         }
     }
 
-
-    // função para verificar se a array está vazia.
-    // recebe uma array recupera uma cópia da array de dados se estiver vazia
-    // ou retorna uma cópia se não estiver
-    function fetchShuffledArrayIfEmpty(array) {
-        if (array.length === 0) {
-            return shuffleArray(descricoesDoPublico.slice());
-        } else {
-           return array.slice();
-        }
-    }
 
 
     function shuffleArray(array) {
-        var i, j, x;
+        let i, j;
         for (i = array.length; i; i--) {
             j = Math.floor(Math.random() * i);
-            x = array[i - 1];
-            array[i - 1] = array[j];
-            array[j] = x;
+            // swap values by destructuring
+            [ array[i - 1], array[j] ] = [ array[j], array[i - 1] ];
         }
         return array;
     }
 
 
 
-    // inicia o programa fazendo GET
-    function iniciar() {
+    // start app with data from GET
+    (function start() {
         $.get(url, function (data) {
-            descricoesDoPublico = data;
+            publicDescriptions = data;
             // inicia o loop
-            loopRepeat(fetchShuffledArrayIfEmpty(descricoesDoPublico));
+            loopAndRepeat(shuffleArray(publicDescriptions), 0);
         });
-    }
-
-    iniciar();
+    })();
 
 
-    // timer para atualizar descricoes a cada 10 minutos
-    var timer = setInterval(function () {
+
+    // updates publicDescriptions on interval
+    setInterval(function () {
         $.get(url, function (data) {
-            descricoesDoPublico = data;
+            publicDescriptions = data;
         });
-    }, 10 * MINUTO);
+    }, 10 * MINUTE);
 
 
 });

@@ -1,29 +1,42 @@
-$(document).ready(function () {
+(function relatorio() {
     "use strict";
 
     var url = "/src/listar-aprovadas.php";
 
     var descricoesDoPublico = [];
 
-    const SEGUNDO = 1000, MINUTO = 60000;
+    var SEGUNDO = 1000, MINUTO = 60000;
     var ANIM_SPEED = 600;
 
     var container = document.getElementById('container');
 
-    container.appendChild
+    // container.appendChild
 
-    function addElement() {
+    /*    function addElement() {
 
-        var paragraph = document.createElement('p');
-        var content = document.createTextNode(descricao);
-        paragraph.appendChild(content);
+            var paragraph = document.createElement('p');
+            var content = document.createTextNode(descricao);
+            paragraph.appendChild(content);
 
-        container.appendChild(paragraph);
-        document.body.insertBefore(newDiv, currentDiv);
+            container.appendChild(paragraph);
+            document.body.insertBefore(newDiv, currentDiv);
+        }*/
+
+    function fetchData() {
+        var xhr = new XMLHttpRequest();
+        xhr.responseType = "json";
+        xhr.onreadystatechange = function readyStateChangeHandler() {
+            if (this.readyState == 4 && this.status == 200)
+                console.log(xhr.response);
+                return xhr.response;
+        }
+        xhr.open('GET', url, true);
+        xhr.send();
     }
 
+    fetchData();
 
-    var req = new XMLHttpRequest();
+
 
 
 
@@ -60,12 +73,4 @@ $(document).ready(function () {
             }, intervalo) // intervalo entre uma descrição e outra
         }
     }
-
-
-
-
-
-
-
-
-});
+})();
