@@ -18,26 +18,26 @@
 
     <div class="pagina">
 
-        <form>
+        <form class="main-form">
 
-            <label for="descricao">Descreva para alguém que não enxerga algo que você vê ou sente ao olhar essa imagem.</label>
-            <textarea id="descricao" name="descricao" rows="5" cols="65" maxlength="300" autocomplete="off" autofocus placeholder=""></textarea>
-            <p class="contador-de-caracteres"><span id="contador">300</span> caracteres restantes</p>
-            <button id="enviar">Clique aqui para enviar a sua descrição</button>
+            <label class="main-form__label" for="descricao">Descreva para alguém que não enxerga algo que você vê ou sente ao olhar essa imagem.</label>
+            <textarea class="main-form__textarea" id="descricao" name="descricao" rows="5" maxlength="300" autocomplete="off" autofocus placeholder=""></textarea>
+            <p class="main-form__contador-de-caracteres"><span id="contador">300</span> caracteres restantes</p>
+            <button class="main-form__button" id="enviar">Clique aqui para enviar a sua descrição</button>
         </form>
 
     </div>
 
-    <div id="confirmacao">
-        <div class="overlay">
-            <div class="confirmacao_mensagem">
-                <p>Obrigado! <br> Sua descrição foi enviada.</p>
+    <div id="confirmacao" class="confirmacao">
+        <div class="confirmacao__overlay">
+            <div class="confirmacao__mensagem">
+                <p class="confirmacao__p">Obrigado! <br> Sua descrição foi enviada.</p>
             </div>
         </div>
     </div>
 
-    <div id="fullscreen-msg">
-        <button id="enter-fullscreen">Entrar em modo de tela cheia</button>
+    <div id="fullscreen-msg" class="enter-fullscreen">
+        <button id="enter-fullscreen" class="enter-fullscreen__button">Entrar em modo de tela cheia</button>
     </div>
 
     <script type="text/javascript" src="js/jquery-3.1.0.min.js"></script>

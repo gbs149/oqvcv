@@ -62,32 +62,58 @@ fieldset {
 	user-select: none;
 }
 
+@media(max-width: 1280px) {
+    html {
+        font-size: 0.8em;
+    }
+}
+
+@media(max-width: 1024px) {
+    html {
+        font-size: 0.7em;
+    }
+}
+
+@media(max-width: 800px) {
+    html {
+        font-size: 0.6em;
+    }
+}
+
+@media(max-width: 400px) {
+    html {
+        font-size: 0.5em;
+    }
+}
+
 .pagina {
     min-width: 100vw;
     min-height: 100vh;
-
     background-color: #141414;
     color: #eee;
 
+
     display: flex;
     justify-content: center;
-    align-items: flex-start;
+    /*flex-flow: row;*/
+    /*align-items: flex-start;*/
 }
 
-form {
+.main-form {
     display: flex;
     flex-flow: column nowrap;
-    justify-content: center;
-    padding: 0 1rem;
+    margin: 0 1rem;
+    /*justify-content: center;*/
+    /*padding: 0 1rem;*/
 }
 
-textarea {
+.main-form__textarea {
     resize: none;
     padding: 0.5rem;
-    margin-bottom: 0.5rem;
+    /*margin-bottom: 0.5rem;*/
 
     font-size: 2rem;
-    background-color: #eee;
+    /*background-color: #eee;*/
     color: #151515;
 
     /*border: none;*/
@@ -97,16 +123,17 @@ textarea {
     outline: none;
 }
 
-label {
-    padding: 1.2rem 0 0.5rem 0;
+.main-form__label {
+    padding:0.5rem 0;
+    margin-top: 0.7rem;
     font-size: 1.8rem;
 }
 
-.contador-de-caracteres {
+.main-form__contador-de-caracteres {
     align-self: flex-end;
 
     font-size: 1.7rem;
-    margin: 0;
+    margin: 0.5rem 0;
 }
 
 
@@ -117,25 +144,21 @@ input:-moz-placeholder {      color:#ccc; }
 
 
 
-button {
-    display: block;
+.main-form__button {
     border: none;
     padding: 0.8rem;
 
     font-size: 2rem;
     font-weight: 700;
-    text-shadow: 1px 1px 2px rgba(20,20,20,0.2);
     background-color: #00dfff;
     color: #000;
 
     border: none;
     border-radius: 4px;
     box-sizing: border-box;
-
-    margin-top: 0.5rem;
 }
 
-button:hover, button:active {
+.main-form__button:hover, .main-form__button:active {
     background-color: #00c8e5;
 }
 
@@ -143,18 +166,17 @@ button:hover, button:active {
 
 /* MENSAGEM DE CONFIRMAÇÃO */
 
-#confirmacao {
+.confirmacao {
     display: none;
 }
 
-.overlay {
+.confirmacao__overlay {
     position: absolute;
     top: 0;
     left: 0;
 
     width: 100%;
     height: 100%;
-    padding-top: 4rem;
 
     display: flex;
     justify-content: center;
@@ -163,17 +185,18 @@ button:hover, button:active {
     background-color: rgba(0,0,0,0.8);
 }
 
-.confirmacao_mensagem {
+.confirmacao__mensagem {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 8rem;
 
-    width: 40%;
-    height: 30%;
-    padding: 1.4rem;
+    width: 16em;
+    height: 6em;
 
     border-radius: 8px;
     background-color: #eee;
+    box-shadow: 0.3rem 0.3rem 0.4em #000;
 
     color: #121212;
     font-size: 2rem;
@@ -181,15 +204,18 @@ button:hover, button:active {
     line-height: 1.6em;
 }
 
+.confirmacao__p {
+    margin: 1em;
+}
+
 
 
 /* fullscreen overlay */
 
-#fullscreen-msg {
+.enter-fullscreen {
     display: flex;
     justify-content: center;
     align-items: center;
-
 
     position: absolute;
     top: 0;
@@ -201,8 +227,17 @@ button:hover, button:active {
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-#enter-fullscreen {
+.enter-fullscreen__button {
     font-size: 2em;
+    font-weight: 700;
+    color: #000;
+
+    padding: 2rem 3rem;
+    background-color: coral;
+
+    border: none;
+    border-radius: 4px;
+    box-sizing: border-box;
 }
 
 .hidden {
