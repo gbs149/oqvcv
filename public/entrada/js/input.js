@@ -1,100 +1,121 @@
-$(document).ready(function () {
-    "use strict";
+(function () {
+    'use strict';
 
-    var MENSAGENS = [
-        // uma array de strings com as descrições
-    ];
+    var DESCRIPTIONS = [];
 
-    var $descricao = $("#descricao"),
-        $contador = $("#contador"),
-        $confirmacao = $("#confirmacao");
+    const descricaoTextArea = document.getElementById('descricao');
+    const remainingChars = document.getElementById('contador');
+    const confirmationMessage = document.getElementById('confirmacao');
+
+    descricaoTextArea.addEventListener('input', updateCounter, false);
+
+
+    var $confirmacao = $('#confirmacao'); //jq
+
+
+    function updateCounter() {
+        remainingChars.textContent = (300 - descricaoTextArea.value.length);
+    }
 
     function enviarDescricoes(event) {
         event.preventDefault();
 
-        // pega o texto do formulário
-        var textoDescricao = $descricao.val();
+        ///////////////////////////////////////////////////////////////////
+        const textoDescricao = descricaoTextArea.value;
+
         var umaDescricao = [];
 
         if (textoDescricao) {
 
-            umaDescricao.push(textoDescricao);
+            umaDescricao.push(textoDescricao); // concat
 
-            // transforma o objeto json em string para o envio
             var textMessages = JSON.stringify(umaDescricao);
 
-            // limpa os campos do formulário
-            $descricao.val("");
-            $descricao.focus();
 
-            // reseta o contador
-            $contador.text(300);
+            // RESET ////////////////////////////
+            resetForm();
+            /////////////////////////////////////
 
+
+            ////////////////////////////////////////////////////////
             // aciona mensagem de confirmação
             $confirmacao.fadeIn(300, function () {
                 setTimeout(function () {
                     $confirmacao.fadeOut(400);
                 }, 3000);
-            });
+            }); // jq
+            ///////////////////////////////////////////////////////
+
+
+
+
+            /////////////////////////////////////////////////////////////
 
             // faz o post da mensagem. Se falhar, guarda a descrição para mandar depois.
             var ajaxOptions = {
-                method:"POST",
+                method: 'POST',
                 data: { mensagens: textMessages },
-                url: "/src/inserir.php",
+                url: '/src/inserir.php',
                 timeout: 10000,
                 success: function (returnData) {
-                    if (returnData !== "sucesso") {
-                        MENSAGENS.push(textoDescricao);
+                    if (returnData !== 'sucesso') {
+                        DESCRIPTIONS.push(textoDescricao);
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
-                    MENSAGENS.push(textoDescricao);
+                    DESCRIPTIONS.push(textoDescricao);
                 }
             };
 
             $.ajax(ajaxOptions);
+            // jq
+
+            /////////////////////////////////////////////////////
         }
+    }
+
+    function resetForm() {
+        descricaoTextArea.value = '';
+        descricaoTextArea.focus();
+        remainingChars.textContent = 300;
     }
 
 
     // seta o timer de envio das mensagens
     var TIMER = setInterval(function () {
 
-        if (MENSAGENS) {
+        if (DESCRIPTIONS) {
 
-            // transforma o objeto json em string para o envio
-            var textMessages = JSON.stringify(MENSAGENS);
+            var textMessages = JSON.stringify(DESCRIPTIONS);
+
 
             // faz o post das mensagens
-            $.post("/src/inserir.php", {
+            $.post('/src/inserir.php', {
                 mensagens: textMessages
             },
-                // se sucesso, limpa a variável global MENSAGENS
+                // se sucesso, limpa a variável global MENSAGENS   ***********************
+                //***********************************************
                 // senão deixa por isso mesmo e ela , automaticamente, será reenviada (tentativa de) após 30 minutos
                 function (data) {
-                    if (data === "sucesso") {
-                        MENSAGENS = [];
+                    if (data === 'sucesso') {
+                        DESCRIPTIONS = [];
                     }
-                });
+                }); // jq
         }
     }, 2 * 60000); // = 2min
 
 
     // click no botão envia a descrição
-    $("#enviar").on("click", enviarDescricoes);
-
-    // contador de caracteres restantes
-    $descricao.keyup(function () {
-        $contador.text(300 - $descricao.val().length);
-    });
+    $('#enviar').on('click', enviarDescricoes); // jq
 
 
     // entrar em tela cheia ao iniciar
-    $("#enter-fullscreen").on("click", enterFullScreen);
+    $('#enter-fullscreen').on('click', enterFullScreen); // jq
+
 
     function enterFullScreen() {
-        $("#fullscreen-msg").addClass("hidden");
+
+        $('#fullscreen-msg').addClass('hidden'); // jq
 
         var docElm = document.documentElement;
         if (docElm.requestFullscreen) {
@@ -112,4 +133,4 @@ $(document).ready(function () {
     }
 
 
-});
+})();
