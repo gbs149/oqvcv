@@ -1,16 +1,13 @@
 (function () {
     'use strict';
 
-    var DESCRIPTIONS = [];
+    const DESCRIPTIONS = [];
 
     const descricaoTextArea = document.getElementById('descricao');
     const remainingChars = document.getElementById('contador');
     const confirmationMessage = document.getElementById('confirmacao');
 
     descricaoTextArea.addEventListener('input', updateCounter, false);
-
-
-    var $confirmacao = $('#confirmacao'); //jq
 
 
     function updateCounter() {
@@ -23,54 +20,35 @@
         ///////////////////////////////////////////////////////////////////
         const textoDescricao = descricaoTextArea.value;
 
-        var umaDescricao = [];
-
         if (textoDescricao) {
-
-            umaDescricao.push(textoDescricao); // concat
-
-            var textMessages = JSON.stringify(umaDescricao);
-
 
             // RESET ////////////////////////////
             resetForm();
-            /////////////////////////////////////
+            showConfirmationMessage();
 
-
-            ////////////////////////////////////////////////////////
-            // aciona mensagem de confirmação
-            $confirmacao.fadeIn(300, function () {
-                setTimeout(function () {
-                    $confirmacao.fadeOut(400);
-                }, 3000);
-            }); // jq
             ///////////////////////////////////////////////////////
-
-
-
-
-            /////////////////////////////////////////////////////////////
 
             // faz o post da mensagem. Se falhar, guarda a descrição para mandar depois.
             var ajaxOptions = {
                 method: 'POST',
-                data: { mensagens: textMessages },
+                data: { mensagens: JSON.stringify([textoDescricao]) },
                 url: '/src/inserir.php',
                 timeout: 10000,
                 success: function (returnData) {
                     if (returnData !== 'sucesso') {
                         DESCRIPTIONS.push(textoDescricao);
+                        // debugger;
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     DESCRIPTIONS.push(textoDescricao);
+                    // debugger;
                 }
             };
 
             $.ajax(ajaxOptions);
             // jq
-
-            /////////////////////////////////////////////////////
+            // debugger;
         }
     }
 
@@ -80,18 +58,26 @@
         remainingChars.textContent = 300;
     }
 
+    function showConfirmationMessage() {
+        confirmationMessage.classList.remove('hidden');
+        confirmationMessage.classList.add('visible');
+        setTimeout(function () {
+            confirmationMessage.classList.remove('visible');
+            confirmationMessage.classList.add('hidden');
+        }, 3000);
+
+    }
+
 
     // seta o timer de envio das mensagens
-    var TIMER = setInterval(function () {
+    const TIMER = setInterval(function () {
 
         if (DESCRIPTIONS) {
 
-            var textMessages = JSON.stringify(DESCRIPTIONS);
+            // var textMessages = JSON.stringify(DESCRIPTIONS);
 
-
-            // faz o post das mensagens
             $.post('/src/inserir.php', {
-                mensagens: textMessages
+                mensagens: JSON.stringify(DESCRIPTIONS)
             },
                 // se sucesso, limpa a variável global MENSAGENS   ***********************
                 //***********************************************
@@ -105,17 +91,18 @@
     }, 2 * 60000); // = 2min
 
 
-    // click no botão envia a descrição
-    $('#enviar').on('click', enviarDescricoes); // jq
 
+    const sendButton = document.getElementById('enviar');
+    sendButton.addEventListener('click', enviarDescricoes);
 
     // entrar em tela cheia ao iniciar
-    $('#enter-fullscreen').on('click', enterFullScreen); // jq
-
+    const enterFullScreenButton = document.getElementById('enter-fullscreen');
+    enterFullScreenButton.addEventListener('click', enterFullScreen);
 
     function enterFullScreen() {
 
-        $('#fullscreen-msg').addClass('hidden'); // jq
+        const fullScreenMessage = document.getElementById('fullscreen-msg');
+        fullScreenMessage.classList.add('hidden');
 
         var docElm = document.documentElement;
         if (docElm.requestFullscreen) {
@@ -131,6 +118,4 @@
             docElm.msRequestFullscreen();
         }
     }
-
-
 })();

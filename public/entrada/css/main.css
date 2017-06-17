@@ -167,7 +167,9 @@ input:-moz-placeholder {      color:#ccc; }
 /* MENSAGEM DE CONFIRMAÇÃO */
 
 .confirmacao {
-    display: none;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.4s ease, visibility 0s;
 }
 
 .confirmacao__overlay {
@@ -241,9 +243,14 @@ input:-moz-placeholder {      color:#ccc; }
 }
 
 .hidden {
-    display: none !important;
     visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.4s ease, visibility 0s linear 0.5s;
 }
 
+.visible {
+    opacity: 1;
+    visibility: visible;
+}
 
 
