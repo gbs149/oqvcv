@@ -23,7 +23,7 @@
         if (descriptionsBuffer.length !== 0) {
             sendBuffer();
         }
-    }, 2 * 10000); // = 2min
+    }, 2 * 60000); // => 2min
 
     function enterFullScreen() {
         const fullScreenMessage = document.getElementById('fullscreen-msg');
