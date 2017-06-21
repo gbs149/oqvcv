@@ -1,7 +1,11 @@
 <?php
 
-// recebe as mesnagens por POST
-$descricoes = json_decode($_POST["mensagens"]);
+// recebe as mensagens por POST
+$postJSON = file_get_contents('php://input');
+$post = json_decode($postJSON, true);
+
+$descricoes = $post["mensagens"];
+
 $sucesso;
 
 // sanitiza as strings na array $descricoes
@@ -30,9 +34,10 @@ foreach($descricoes as $desc) {
 }
 unset($item);
 
+
+
 // se a gravação for bem sucedida retorna "sucesso"
 if ($sucesso){
-    echo "sucesso";
-}
-
+    echo json_encode(array("success" => true ));
+} 
 

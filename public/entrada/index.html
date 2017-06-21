@@ -14,11 +14,9 @@
 </head>
 
 <body>
-
-
     <div class="pagina">
 
-        <form class="main-form">
+        <form id="form" class="main-form">
 
             <label class="main-form__label" for="descricao">Descreva para alguém que não enxerga algo que você vê ou sente ao olhar essa imagem.</label>
             <textarea class="main-form__textarea" id="descricao" name="descricao" rows="5" maxlength="300" autocomplete="off" autofocus placeholder=""></textarea>
@@ -28,7 +26,7 @@
 
     </div>
 
-    <div id="confirmacao" class="confirmacao">
+    <div id="confirmacao" class="confirmacao hidden">
         <div class="confirmacao__overlay">
             <div class="confirmacao__mensagem">
                 <p class="confirmacao__p">Obrigado! <br> Sua descrição foi enviada.</p>
@@ -40,7 +38,6 @@
         <button id="enter-fullscreen" class="enter-fullscreen__button">Entrar em modo de tela cheia</button>
     </div>
 
-    <script type="text/javascript" src="js/jquery-3.1.0.min.js"></script>
     <script src="js/input.js"></script>
 </body>
 

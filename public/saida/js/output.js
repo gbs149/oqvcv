@@ -1,6 +1,6 @@
 "use strict";
 
-$(document).ready(function () {
+(function () {
 
     const url = "/src/listar-aprovadas.php";
 
@@ -16,7 +16,7 @@ $(document).ready(function () {
             loopAndRepeat(shuffleArray(publicDescriptions), 0);
         } else {
             let texto = arraysDescricoes[index];
-            $("#descricao").stop().animate({ opacity: 0 }, ANIM_SPEED, function () {
+            $("#descricao").stop().animate({ opacity: 0 }, ANIM_SPEED, function () { // jq -> css transitions
                 $("#descricao").text(texto).stop().animate({ opacity: 1 }, ANIM_SPEED, function () {
                     speakText(texto, function () {
                         loopAndRepeat(arraysDescricoes, index + 1);
@@ -65,9 +65,8 @@ $(document).ready(function () {
 
     // start app with data from GET
     (function start() {
-        $.get(url, function (data) {
+        $.get(url, function (data) { // jq -> fetch
             publicDescriptions = data;
-            // inicia o loop
             loopAndRepeat(shuffleArray(publicDescriptions), 0);
         });
     })();
@@ -76,10 +75,10 @@ $(document).ready(function () {
 
     // updates publicDescriptions on interval
     setInterval(function () {
-        $.get(url, function (data) {
+        $.get(url, function (data) { // jq -> fetch
             publicDescriptions = data;
         });
     }, 10 * MINUTE);
 
 
-});
+})();

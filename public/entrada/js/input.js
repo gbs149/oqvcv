@@ -1,106 +1,31 @@
 (function () {
     'use strict';
 
-    const DESCRIPTIONS = [];
-
-    const descricaoTextArea = document.getElementById('descricao');
-    const remainingChars = document.getElementById('contador');
-    const confirmationMessage = document.getElementById('confirmacao');
-
-    descricaoTextArea.addEventListener('input', updateCounter, false);
-
-
-    function updateCounter() {
-        remainingChars.textContent = (300 - descricaoTextArea.value.length);
-    }
-
-    function enviarDescricoes(event) {
-        event.preventDefault();
-
-        ///////////////////////////////////////////////////////////////////
-        const textoDescricao = descricaoTextArea.value;
-
-        if (textoDescricao) {
-
-            // RESET ////////////////////////////
-            resetForm();
-            showConfirmationMessage();
-
-            ///////////////////////////////////////////////////////
-
-            // faz o post da mensagem. Se falhar, guarda a descrição para mandar depois.
-            var ajaxOptions = {
-                method: 'POST',
-                data: { mensagens: JSON.stringify([textoDescricao]) },
-                url: '/src/inserir.php',
-                timeout: 10000,
-                success: function (returnData) {
-                    if (returnData !== 'sucesso') {
-                        DESCRIPTIONS.push(textoDescricao);
-                        // debugger;
-                    }
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    DESCRIPTIONS.push(textoDescricao);
-                    // debugger;
-                }
-            };
-
-            $.ajax(ajaxOptions);
-            // jq
-            // debugger;
-        }
-    }
-
-    function resetForm() {
-        descricaoTextArea.value = '';
-        descricaoTextArea.focus();
-        remainingChars.textContent = 300;
-    }
-
-    function showConfirmationMessage() {
-        confirmationMessage.classList.remove('hidden');
-        confirmationMessage.classList.add('visible');
-        setTimeout(function () {
-            confirmationMessage.classList.remove('visible');
-            confirmationMessage.classList.add('hidden');
-        }, 3000);
-
-    }
-
-
-    // seta o timer de envio das mensagens
-    const TIMER = setInterval(function () {
-
-        if (DESCRIPTIONS) {
-
-            // var textMessages = JSON.stringify(DESCRIPTIONS);
-
-            $.post('/src/inserir.php', {
-                mensagens: JSON.stringify(DESCRIPTIONS)
-            },
-                // se sucesso, limpa a variável global MENSAGENS   ***********************
-                //***********************************************
-                // senão deixa por isso mesmo e ela , automaticamente, será reenviada (tentativa de) após 30 minutos
-                function (data) {
-                    if (data === 'sucesso') {
-                        DESCRIPTIONS = [];
-                    }
-                }); // jq
-        }
-    }, 2 * 60000); // = 2min
-
-
-
-    const sendButton = document.getElementById('enviar');
-    sendButton.addEventListener('click', enviarDescricoes);
-
     // entrar em tela cheia ao iniciar
     const enterFullScreenButton = document.getElementById('enter-fullscreen');
     enterFullScreenButton.addEventListener('click', enterFullScreen);
 
-    function enterFullScreen() {
 
+
+    const descriptionTextArea = document.getElementById('descricao');
+    const remainingChars = document.getElementById('contador');
+    const confirmationMessage = document.getElementById('confirmacao');
+    const sendButton = document.getElementById('enviar');
+
+    descriptionTextArea.addEventListener('input', updateCounter, false);
+    sendButton.addEventListener('click', sendDescription);
+
+
+
+    let descriptionsBuffer = [];
+
+    setInterval(() => {
+        if (descriptionsBuffer.length !== 0) {
+            sendBuffer();
+        }
+    }, 2 * 10000); // = 2min
+
+    function enterFullScreen() {
         const fullScreenMessage = document.getElementById('fullscreen-msg');
         fullScreenMessage.classList.add('hidden');
 
@@ -118,4 +43,75 @@
             docElm.msRequestFullscreen();
         }
     }
+
+    function resetForm() {
+        descriptionTextArea.value = '';
+        descriptionTextArea.focus();
+        remainingChars.textContent = 300;
+    }
+
+    function sendData(data) {
+
+        const sendMessageOptions = {
+            method: 'POST',
+            body: JSON.stringify({ mensagens: wrapInArray(data) })
+        };
+
+        return fetch('../../src/inserir.php', sendMessageOptions);
+    }
+
+    function sendDescription(event) {
+        event.preventDefault();
+        const data = descriptionTextArea.value;
+        if (data) {
+            sendData(data)
+                .then(response => response.json())
+                .then(response => {
+                    if (!response.success) {
+                        descriptionsBuffer.push(data);
+                    }
+                })
+                .catch(err => {
+                    descriptionsBuffer.push(data);
+                    console.error(err);
+                });
+            resetForm();
+            showConfirmationMessage();
+        }
+    }
+
+    function sendBuffer() {
+        sendData(descriptionsBuffer)
+            .then(response => response.json())
+            .then(response => {
+                if (response.success) {
+                    descriptionsBuffer = [];
+                }
+            })
+            .catch(err => {
+                console.error(err);
+            });
+    }
+
+    function showConfirmationMessage() {
+        confirmationMessage.classList.remove('hidden');
+        confirmationMessage.classList.add('visible');
+        setTimeout(function () {
+            confirmationMessage.classList.remove('visible');
+            confirmationMessage.classList.add('hidden');
+        }, 3000);
+
+    }
+
+    function updateCounter() {
+        remainingChars.textContent = (300 - descriptionTextArea.value.length);
+    }
+
+    function wrapInArray(input) {
+        if (!Array.isArray(input)) {
+            return [input];
+        }
+        return input;
+    }
+
 })();

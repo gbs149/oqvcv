@@ -16,7 +16,7 @@ try {
     );
 } catch (PDOException $e) {
     // Database connection failed
-    print "Database connection failed";
+    echo json_encode(array("success" => false ));
     exit;
 }
 
