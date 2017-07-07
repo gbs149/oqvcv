@@ -1,31 +1,63 @@
-"use strict";
+'use strict';
 
 (function () {
 
-    const url = "/src/listar-aprovadas.php";
-
-    let publicDescriptions = [];
-
-    const SECOND = 1000, MINUTE = 60000;
-    const ANIM_SPEED = 600;
+    //const url = '/src/listar-aprovadas.php';
+    //const ANIM_SPEED = 600;
+    // const MINUTE = 60000;
 
 
 
-    function loopAndRepeat(arraysDescricoes, index) {
-        if (index === arraysDescricoes.length - 1) {
+    let publicDescriptions = ['um texto', 'dois elefantes', 'tres bananas'];
+
+    const SECOND = 1000;
+
+    const description = document.getElementById('descricao');
+
+    loopAndRepeat(publicDescriptions, 0);
+
+    function loopAndRepeat(arrayDescriptions, index) {
+        if (index === arrayDescriptions.length) {
+            // debugger;
             loopAndRepeat(shuffleArray(publicDescriptions), 0);
         } else {
-            let texto = arraysDescricoes[index];
-            $("#descricao").stop().animate({ opacity: 0 }, ANIM_SPEED, function () { // jq -> css transitions
-                $("#descricao").text(texto).stop().animate({ opacity: 1 }, ANIM_SPEED, function () {
-                    speakText(texto, function () {
-                        loopAndRepeat(arraysDescricoes, index + 1);
-                    });
-                });
-            });
+            let text = arrayDescriptions[index];
+            animate(arrayDescriptions, index, description, text);
         }
     }
 
+    function animate(array, index, element, text) {
+        element.addEventListener('transitionend', () => {
+            element.addEventListener('transitionend', () => {
+                console.log(index, text);
+                speakText(text, () => {
+                    loopAndRepeat(array, index + 1);
+                });
+            }, { once: true });
+            updateAndFadeIn(element, text);
+        }, { once: true });
+
+        fadeOut(element);
+    }
+
+    function fadeIn(element) {
+        element.classList.remove('hidden');
+        element.classList.add('visible');
+    }
+
+    function fadeOut(element) {
+        element.classList.remove('visible');
+        element.classList.add('hidden');
+    }
+
+    function updateText(element, text) {
+        element.textContent = text;
+    }
+
+    function updateAndFadeIn(element, text) {
+        updateText(element, text);
+        fadeIn(element);
+    }
 
 
     function speakText(text, callback) {
@@ -37,16 +69,16 @@
         textToSpeak.volume = 1;
         textToSpeak.pitch = 1.2;
         textToSpeak.rate = 1.3;
-        textToSpeak.lang = "pt-BR";
+        textToSpeak.lang = 'pt-BR';
 
         synth.speak(textToSpeak);
 
-        textToSpeak.onend = function () {
+        textToSpeak.onend = () => {
             synth.cancel();
-            setTimeout(function () {
+            setTimeout(() => {
                 callback();
-            }, interval) 
-        }
+            }, interval);
+        };
     }
 
 
@@ -56,7 +88,7 @@
         for (i = array.length; i; i--) {
             j = Math.floor(Math.random() * i);
             // swap values by destructuring
-            [ array[i - 1], array[j] ] = [ array[j], array[i - 1] ];
+            [array[i - 1], array[j]] = [array[j], array[i - 1]];
         }
         return array;
     }
@@ -64,7 +96,7 @@
 
 
     // start app with data from GET
-    (function start() {
+    /*(function start() {
         $.get(url, function (data) { // jq -> fetch
             publicDescriptions = data;
             loopAndRepeat(shuffleArray(publicDescriptions), 0);
@@ -78,7 +110,7 @@
         $.get(url, function (data) { // jq -> fetch
             publicDescriptions = data;
         });
-    }, 10 * MINUTE);
+    }, 10 * MINUTE);*/
 
 
 })();
