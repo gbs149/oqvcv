@@ -2,41 +2,56 @@
 
 (function () {
 
-    //const url = '/src/listar-aprovadas.php';
-    //const ANIM_SPEED = 600;
-    // const MINUTE = 60000;
+    let publicDescriptions = [];
 
-
-
-    let publicDescriptions = ['um texto', 'dois elefantes', 'tres bananas'];
-
+    const URL = '/src/listar-aprovadas.php';
     const SECOND = 1000;
+    const MINUTE = 60000;
+    const INTERVAL = 2 * SECOND;
 
-    const description = document.getElementById('descricao');
+    const $description = document.getElementById('descricao');
 
-    loopAndRepeat(publicDescriptions, 0);
+    // start app with data from GET
 
-    function loopAndRepeat(arrayDescriptions, index) {
+    fetch(URL, { method: 'get' }).then((response) => {
+        return response.json();
+    }).then((data) => {
+        publicDescriptions = data;
+        mainLoop(shuffleArray(publicDescriptions), 0);
+    });
+    // mainLoop(publicDescriptions, 0);
+
+
+    // updates publicDescriptions on interval
+    setInterval(() => {
+        fetch(URL, { method: 'get' })
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                publicDescriptions = data;
+            }) ;
+    }, 1 * MINUTE);
+
+    function mainLoop(arrayDescriptions, index) {
         if (index === arrayDescriptions.length) {
             // debugger;
-            loopAndRepeat(shuffleArray(publicDescriptions), 0);
+            mainLoop(shuffleArray(publicDescriptions), 0);
         } else {
             let text = arrayDescriptions[index];
-            animate(arrayDescriptions, index, description, text);
+            animateAndPlay(arrayDescriptions, index, $description, text);
         }
     }
 
-    function animate(array, index, element, text) {
+    function animateAndPlay(array, index, element, text) {
         element.addEventListener('transitionend', () => {
             element.addEventListener('transitionend', () => {
-                console.log(index, text);
                 speakText(text, () => {
-                    loopAndRepeat(array, index + 1);
+                    mainLoop(array, index + 1);
                 });
             }, { once: true });
             updateAndFadeIn(element, text);
         }, { once: true });
-
         fadeOut(element);
     }
 
@@ -59,10 +74,7 @@
         fadeIn(element);
     }
 
-
     function speakText(text, callback) {
-        const interval = 2 * SECOND;
-
         const synth = window.speechSynthesis;
         let textToSpeak = new SpeechSynthesisUtterance(text);
 
@@ -77,11 +89,9 @@
             synth.cancel();
             setTimeout(() => {
                 callback();
-            }, interval);
+            }, INTERVAL);
         };
     }
-
-
 
     function shuffleArray(array) {
         let i, j;
@@ -92,25 +102,5 @@
         }
         return array;
     }
-
-
-
-    // start app with data from GET
-    /*(function start() {
-        $.get(url, function (data) { // jq -> fetch
-            publicDescriptions = data;
-            loopAndRepeat(shuffleArray(publicDescriptions), 0);
-        });
-    })();
-
-
-
-    // updates publicDescriptions on interval
-    setInterval(function () {
-        $.get(url, function (data) { // jq -> fetch
-            publicDescriptions = data;
-        });
-    }, 10 * MINUTE);*/
-
 
 })();
