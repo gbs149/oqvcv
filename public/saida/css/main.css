@@ -80,6 +80,17 @@ textarea {
 	font-family: 'Noto Sans', sans-serif;
 	line-height: 1.5;
 	max-width: 80%;
+
+}
+
+.hidden {
+    opacity: 0;
+    transition: opacity 0.6s ease;
+}
+
+.visible {
+    opacity: 1;
+	  transition: opacity 1s ease;
 }
 
 
@@ -99,10 +110,10 @@ textarea {
    Helper classes
    ========================================================================== */
 
-.hidden {
+/*.hidden {
 	display: none !important;
 	visibility: hidden;
-}
+}*/
 
 .visuallyhidden {
 	border: 0;
