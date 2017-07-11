@@ -76,12 +76,49 @@ textarea {
 }
 
 #descricao {
-	font-size: 2.6rem;
+	font-size: 3rem;
 	font-family: 'Noto Sans', sans-serif;
 	line-height: 1.5;
 	max-width: 80%;
 
 }
+
+@media(max-width: 1400px) {
+	#descricao {
+		font-size: 2.5rem;
+	}
+}
+
+@media(max-width: 1200px) {
+	#descricao {
+		font-size: 2.2rem;
+	}
+}
+
+@media(max-width: 1000px) {
+	#descricao {
+		font-size: 1.8rem;
+	}
+}
+
+@media(max-width: 800px) {
+	#descricao {
+		font-size: 1.5rem;
+	}
+}
+
+@media(max-width: 600px) {
+	#descricao {
+		font-size: 1.2rem;
+	}
+}
+
+@media(max-width: 400px) {
+	#descricao {
+		font-size: 1rem;
+	}
+}
+
 
 .hidden {
     opacity: 0;

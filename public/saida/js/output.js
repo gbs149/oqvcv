@@ -35,7 +35,6 @@
 
     function mainLoop(arrayDescriptions, index) {
         if (index === arrayDescriptions.length) {
-            // debugger;
             mainLoop(shuffleArray(publicDescriptions), 0);
         } else {
             let text = arrayDescriptions[index];
